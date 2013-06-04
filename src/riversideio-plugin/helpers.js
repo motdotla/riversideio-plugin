@@ -21,22 +21,6 @@
   RiversideioPlugin.prototype.InsertAfter = function(reference_node, new_node) {
     return reference_node.parentNode.insertBefore(new_node, reference_node.nextSibling);
   };
-  
-  RiversideioPlugin.prototype.StandardScreen = function() {
-    return document.body.clientWidth >= 580;
-  };
-
-  RiversideioPlugin.prototype.FireEvent = function(name, target, data) {
-    //Create a generic event
-    var bubbles     = true;
-    var cancelable  = true;
-    var event       = document.createEvent("Events");
-    //Initialize it to be the event we want
-    event.initEvent(name, bubbles, cancelable);
-    event.data = data;
-    //FIRE!
-    target.dispatchEvent(event);
-  };
 
   RiversideioPlugin.prototype.Encode64 = function(input) {
     var char, chr1, chr2, chr3, enc1, enc2, enc3, enc4, i, invalidChar, output, _i, _len, _ref,
@@ -94,17 +78,20 @@
     xmlhttp.send(JSON.stringify(data));
   };
 
-  RiversideioPlugin.prototype.postSignature = function(data_url) {
-    self = this;
-    var payload = {data_url: data_url, key: self.key};
-    self.Post(self.endpoint+'/api/v0/signatures.json', payload, function(resp){
-      if (!!resp.success) {
-        self.hidden_field.value = resp.signature.url;
-        self.FireEvent("signature_pad:save", self.script, resp.signature);
-      } else {
-        console.error(resp.error.message);
-      }
-    });
+  RiversideioPlugin.prototype.hasClass = function(el, name) {
+    return new RegExp('(\\s|^)'+name+'(\\s|$)').test(el.className);
+  };
+
+  RiversideioPlugin.prototype.addClass = function(el, name) {
+    if (!this.hasClass(el, name)) { 
+      el.className += (el.className ? ' ' : '') +name; 
+    }
+  };
+
+  RiversideioPlugin.prototype.removeClass = function(el, name) {
+    if (this.hasClass(el, name)) {
+      el.className=el.className.replace(new RegExp('(\\s|^)'+name+'(\\s|$)'),' ').replace(/^\s+|\s+$/g, '');
+    }
   };
 
 }(RiversideioPlugin));
