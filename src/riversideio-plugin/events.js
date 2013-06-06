@@ -53,8 +53,8 @@
       self.hideOverlay();
 
       if (!!resp.success) {
-        self.user_id        = resp.id;
-        self.session_token  = resp.session_token;
+        self.user_id        = resp.user.id;
+        self.session_token  = resp.user.session_token;
         self.showCCForm();
       } else {
         alert(resp.error.message);
