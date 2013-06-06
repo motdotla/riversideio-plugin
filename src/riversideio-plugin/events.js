@@ -19,14 +19,19 @@
   RiversideioPlugin.prototype.submitSignupForm = function(e) {
     if (e) { e.preventDefault(); }
 
+    self.showOverlay();
+
     var payload = {
-      email: self.signup_form.email_field.value, 
+      email: self.signup_form.email_field.value,
       password: self.signup_form.password_field.value
     };
 
     self.Post(self.endpoint+'/users.json', payload, function(resp){
+      self.hideOverlay();
+
       if (!!resp.success) {
-        self.session_token = resp.user.session_token;
+        self.user_id        = resp.user.id;
+        self.session_token  = resp.user.session_token;
         self.showCCForm();
       } else {
         alert(resp.error.message);
@@ -37,12 +42,16 @@
   RiversideioPlugin.prototype.submitLoginForm = function(e) {
     if (e) { e.preventDefault(); }
 
+    self.showOverlay();
+
     var payload = {
       email: self.login_form.email_field.value, 
       password: self.login_form.password_field.value
     };
 
     self.Post(self.endpoint+'/sessions.json', payload, function(resp){
+      self.hideOverlay();
+
       if (!!resp.success) {
         self.user_id        = resp.id;
         self.session_token  = resp.session_token;
@@ -56,6 +65,8 @@
   RiversideioPlugin.prototype.submitCCForm = function(e) {
     if (e) { e.preventDefault(); }
 
+    self.showOverlay();
+
     var payload = {
       session_token:  self.session_token,
       card_number:    self.cc_form.card_number_field.value,
@@ -65,6 +76,8 @@
     };
 
     self.Post(self.endpoint+'/users/'+self.user_id+'/update_card.json', payload, function(resp){
+      self.hideOverlay();
+
       if (!!resp.success) {
         alert("Successfully added your card. Thanks!");
       } else {
@@ -99,4 +112,17 @@
     self.addClass(self.signup_form, "riversideio-hidden");
     self.addClass(self.login_form, "riversideio-hidden");
   };
+
+  RiversideioPlugin.prototype.showOverlay = function(e) {
+    if (e) { e.preventDefault(); }
+
+    self.removeClass(self.overlay, "riversideio-hidden");
+  };
+
+  RiversideioPlugin.prototype.hideOverlay = function(e) {
+    if (e) { e.preventDefault(); }
+
+    self.addClass(self.overlay, "riversideio-hidden");
+  };
+  
 }(RiversideioPlugin));

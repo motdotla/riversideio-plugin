@@ -31,10 +31,32 @@
 
 (function(RiversideioPlugin){
   RiversideioPlugin.prototype.draw = function() {
+    this._drawWrapper();
+    this._drawOverlay();
     this._drawSignupForm();
     this._drawLoginForm();
     this._drawCCForm();
     this._drawCss();
+  };
+
+  RiversideioPlugin.prototype._drawWrapper = function() {
+    this.wrapper                      = document.createElement('div');
+    this.wrapper.className            = "riversideio-wrapper riversideio-wrapper-overlay";
+
+    return this.InsertAfter(this.script, this.wrapper);
+  };
+
+  RiversideioPlugin.prototype._drawOverlay = function() {
+    this.overlay                      = document.createElement('div');
+    this.overlay.className            = "riversideio-overlay riversideio-hidden";
+
+    var loading_text                  = document.createElement('div');
+    loading_text.className            = "riversideio-overlay-loading-text";
+    loading_text.innerHTML            = "Processing...";
+
+    this.overlay.appendChild(loading_text);
+
+    return this.wrapper.appendChild(this.overlay);
   };
 
   RiversideioPlugin.prototype._drawSignupForm = function() {
@@ -80,7 +102,7 @@
     this.signup_form.login_link.innerHTML         = "login";
     this.signup_form.appendChild(this.signup_form.login_link);
 
-    return this.InsertAfter(this.script, this.signup_form);
+    return this.wrapper.appendChild(this.signup_form);
   };
 
   RiversideioPlugin.prototype._drawLoginForm = function() {
@@ -126,7 +148,7 @@
     this.login_form.join_link.innerHTML         = "join";
     this.login_form.appendChild(this.login_form.join_link);
 
-    return this.InsertAfter(this.script, this.login_form);
+    return this.wrapper.appendChild(this.login_form);
   };
 
   RiversideioPlugin.prototype._drawCCForm = function() {
@@ -187,7 +209,7 @@
     this.cc_form.cc_btn.innerHTML                       = "Submit";
     this.cc_form.appendChild(this.cc_form.cc_btn);
 
-    return this.InsertAfter(this.script, this.cc_form);
+    return this.wrapper.appendChild(this.cc_form);
   };
 
   RiversideioPlugin.prototype._drawCss = function() {
@@ -195,7 +217,10 @@
       ".pure-form{margin:0}.pure-form fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}.pure-form legend{border:0;padding:0;white-space:normal;*margin-left:-7px}.pure-form button,.pure-form input,.pure-form select,.pure-form textarea{font-size:100%;margin:0;vertical-align:baseline;*vertical-align:middle}.pure-form button,.pure-form input{line-height:normal}.pure-form button,.pure-form input[type=button],.pure-form input[type=reset],.pure-form input[type=submit]{-webkit-appearance:button;cursor:pointer;*overflow:visible}.pure-form button[disabled],.pure-form input[disabled]{cursor:default}.pure-form input[type=checkbox],.pure-form input[type=radio]{box-sizing:border-box;padding:0;*height:13px;*width:13px}.pure-form input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}.pure-form input[type=search]::-webkit-search-cancel-button,.pure-form input[type=search]::-webkit-search-decoration{-webkit-appearance:none}.pure-form button::-moz-focus-inner,.pure-form input::-moz-focus-inner{border:0;padding:0}.pure-form textarea{overflow:auto;vertical-align:top}.pure-form input,.pure-form select{padding:.5em .6em;display:inline-block;border:1px solid #ccc;font-size:.8em;box-shadow:inset 0 1px 3px #ddd;border-radius:4px;-webkit-transition:.3s linear border;-moz-transition:.3s linear border;-ms-transition:.3s linear border;-o-transition:.3s linear border;transition:.3s linear border;-moz-box-sizing:border-box;-webkit-box-sizing:border-box;box-sizing:border-box;-webkit-font-smoothing:antialiased}.pure-form input:focus,.pure-form select:focus{outline:0;outline:thin dotted;border-color:#129FEA}.pure-form .pure-checkbox,.pure-form .pure-radio{margin:.5em 0;display:block}.pure-form input[disabled],.pure-form select[disabled],.pure-form textarea[disabled],.pure-form input[readonly],.pure-form select[readonly],.pure-form textarea[readonly]{cursor:not-allowed;background-color:#eaeded;color:#cad2d3;border-color:transparent}.pure-form input:focus:invalid,.pure-form textarea:focus:invalid,.pure-form select:focus:invalid{color:#b94a48;border:1px solid #ee5f5b}.pure-form input:focus:invalid:focus,.pure-form textarea:focus:invalid:focus,.pure-form select:focus:invalid:focus{border-color:#e9322d}.pure-form select{border:1px solid #ccc;background-color:#fff}.pure-form select[multiple]{height:auto}.pure-form label{margin:.5em 0 .2em;color:#999;font-size:90%}.pure-form fieldset{margin:0;padding:.35em 0 .75em;border:0}.pure-form legend{display:block;width:100%;padding:.3em 0;margin-bottom:.3em;font-size:125%;color:#333;border-bottom:1px solid #e5e5e5}.pure-form.pure-form-stacked input[type=text],.pure-form.pure-form-stacked select,.pure-form.pure-form-stacked label{display:block}.pure-form-aligned input,.pure-form-aligned textarea,.pure-form-aligned select,.pure-form-aligned .pure-help-inline{display:inline-block;*display:inline;*zoom:1;vertical-align:middle}.pure-form-aligned .pure-control-group{margin-bottom:.5em}.pure-form-aligned .pure-control-group label{text-align:right;display:inline-block;vertical-align:middle;width:10em;margin:0 1em 0 0}.pure-form-aligned .pure-controls{margin:1.5em 0 0 10em}.pure-form .pure-input-rounded{border-radius:20px;padding-left:1em}.pure-form .pure-group fieldset{margin-bottom:10px}.pure-form .pure-group input{display:block;padding:10px;margin:0;border-radius:0;position:relative;top:-1px}.pure-form .pure-group input:focus{z-index:2}.pure-form .pure-group input:first-child{top:1px;border-radius:4px 4px 0 0}.pure-form .pure-group input:last-child{top:-2px;border-radius:0 0 4px 4px}.pure-form .pure-group button{margin:.35em 0}.pure-form .pure-input-1{width:100%}.pure-form .pure-input-2-3{width:66%}.pure-form .pure-input-1-2{width:50%}.pure-form .pure-input-1-3{width:33%}.pure-form .pure-input-1-4{width:25%}.pure-form .pure-help-inline{display:inline-block;padding-left:.3em;color:#666;vertical-align:middle;font-size:90%}" +
       ".riversideio-btn { background-color: #61B842; color: white; }" +
       ".riversideio-hidden { display: none; } " +
-      ".riversideio-exp-date-input { width: 50px; display: inline !important; }";
+      ".riversideio-exp-date-input { width: 50px; display: inline !important; }" +
+      ".riversideio-wrapper { position: relative; }" +
+      ".riversideio-overlay { z-index: 100; position: absolute; background: rgba(0,0,0,0.75); width: 100%; height: 100%; line-height: 100px; }" +
+      ".riversideio-overlay-loading-text { color: #FFF; text-align: center; vertical-align: middle;}";
 
     var style   = document.createElement('style');
     style.type  = 'text/css';
@@ -230,14 +255,19 @@
   RiversideioPlugin.prototype.submitSignupForm = function(e) {
     if (e) { e.preventDefault(); }
 
+    self.showOverlay();
+
     var payload = {
-      email: self.signup_form.email_field.value, 
+      email: self.signup_form.email_field.value,
       password: self.signup_form.password_field.value
     };
 
     self.Post(self.endpoint+'/users.json', payload, function(resp){
+      self.hideOverlay();
+
       if (!!resp.success) {
-        self.session_token = resp.user.session_token;
+        self.user_id        = resp.user.id;
+        self.session_token  = resp.user.session_token;
         self.showCCForm();
       } else {
         alert(resp.error.message);
@@ -248,12 +278,16 @@
   RiversideioPlugin.prototype.submitLoginForm = function(e) {
     if (e) { e.preventDefault(); }
 
+    self.showOverlay();
+
     var payload = {
       email: self.login_form.email_field.value, 
       password: self.login_form.password_field.value
     };
 
     self.Post(self.endpoint+'/sessions.json', payload, function(resp){
+      self.hideOverlay();
+
       if (!!resp.success) {
         self.user_id        = resp.id;
         self.session_token  = resp.session_token;
@@ -267,6 +301,8 @@
   RiversideioPlugin.prototype.submitCCForm = function(e) {
     if (e) { e.preventDefault(); }
 
+    self.showOverlay();
+
     var payload = {
       session_token:  self.session_token,
       card_number:    self.cc_form.card_number_field.value,
@@ -276,6 +312,8 @@
     };
 
     self.Post(self.endpoint+'/users/'+self.user_id+'/update_card.json', payload, function(resp){
+      self.hideOverlay();
+
       if (!!resp.success) {
         alert("Successfully added your card. Thanks!");
       } else {
@@ -310,6 +348,19 @@
     self.addClass(self.signup_form, "riversideio-hidden");
     self.addClass(self.login_form, "riversideio-hidden");
   };
+
+  RiversideioPlugin.prototype.showOverlay = function(e) {
+    if (e) { e.preventDefault(); }
+
+    self.removeClass(self.overlay, "riversideio-hidden");
+  };
+
+  RiversideioPlugin.prototype.hideOverlay = function(e) {
+    if (e) { e.preventDefault(); }
+
+    self.addClass(self.overlay, "riversideio-hidden");
+  };
+  
 }(RiversideioPlugin));
 
 (function(RiversideioPlugin){  
