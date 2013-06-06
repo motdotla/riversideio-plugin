@@ -1,4 +1,4 @@
-/*! riversideio-plugin.js - 0.0.1 - 2013-06-04 - scottmotte */
+/*! riversideio-plugin.js - 0.0.1 - 2013-06-05 - scottmotte */
 (function(exports){
   var RiversideioPlugin = function() {
     if(!(this instanceof RiversideioPlugin)){
@@ -277,7 +277,7 @@
 
     self.Post(self.endpoint+'/users/'+self.user_id+'/update_card.json', payload, function(resp){
       if (!!resp.success) {
-        alert("implement");
+        alert("Successfully added your card. Thanks!");
       } else {
         alert(resp.error.message);
       }
@@ -288,7 +288,7 @@
     if (e) { e.preventDefault(); }
 
     self.removeClass(self.login_form, "riversideio-hidden");
-    
+
     self.addClass(self.signup_form, "riversideio-hidden");
     self.addClass(self.cc_form, "riversideio-hidden");
   };

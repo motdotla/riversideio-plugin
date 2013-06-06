@@ -10,4 +10,10 @@ Save the build/riversideio-plugin.min.js to your website. And then add the follo
 
 ## Contributing to this repository
 
-Install node and npm. npm install grunt -g. From the command line run grunt and then visit localhost:3000. Edit the files living under /src.
+* Install node and npm. 
+* npm install grunt -g
+* In the root of the repo type: grunt
+* Visit localhost:3000
+* Make changes to the code and repeat.
+
+Edit the files living under /src. The other files are built automatically.
