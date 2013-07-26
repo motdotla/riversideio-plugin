@@ -1,7 +1,33 @@
 (function(RiversideioPlugin){  
-  RiversideioPlugin.prototype.isIE = function() {
-    var isMSIE = /*@cc_on!@*/0;
-    return isMSIE;
+  "use strict";
+
+  RiversideioPlugin.prototype.smartPreventDefault = function(e) {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    } else {
+      if (e) { e.returnValue = false; }
+    }
+  };
+
+  RiversideioPlugin.prototype.isShittyIE = function() {
+    return this.ie() < 10;
+  };
+
+  RiversideioPlugin.prototype.ie = function() {
+    var undef;
+    var v     = 3;
+    var div   = document.createElement('div');
+    var all   = div.getElementsByTagName('i');
+   
+    do {
+        div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->';
+    } while (all[0]);
+ 
+    if (v > 4) {
+      return v;
+    } else {
+      return undef;
+    }
   };
 
   RiversideioPlugin.prototype.Uuid = function() {

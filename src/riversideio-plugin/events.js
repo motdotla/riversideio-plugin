@@ -1,4 +1,6 @@
 (function(RiversideioPlugin){
+  "use strict";
+
   var self;
   var CLICK             = "click";
   var TOUCH_SUPPORTED   = (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) ? true : false;
@@ -9,19 +11,15 @@
   RiversideioPlugin.prototype.events = function() {
     self = this;
 
-    //this.signup_form.addEventListener("submit", this.submitSignupForm, false);
-    //this.login_form.addEventListener("submit", this.submitLoginForm, false);
-    //this.cc_form.addEventListener("submit", this.submitCCForm, false);
-    if (!this.signup_form.addEventListener) {
-      this.signup_form.login_link.attachEvent("onclick", this.showLoginForm);
-    } else {
-      this.signup_form.login_link.addEventListener(CLICK, this.showLoginForm, false);
-    } 
-    //this.login_form.join_link.addEventListener(CLICK, this.showSignupForm, false);
+    self.signup_form.addEventListener("submit", self.submitSignupForm, false);
+    self.login_form.addEventListener("submit", self.submitLoginForm, false);
+    self.cc_form.addEventListener("submit", self.submitCCForm, false);
+    self.signup_form.login_link.addEventListener(CLICK, self.showLoginForm, false);
+    self.login_form.join_link.addEventListener(CLICK, self.showSignupForm, false);
   };
 
   RiversideioPlugin.prototype.submitSignupForm = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.showOverlay();
 
@@ -44,7 +42,7 @@
   };
 
   RiversideioPlugin.prototype.submitLoginForm = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.showOverlay();
 
@@ -67,7 +65,7 @@
   };
 
   RiversideioPlugin.prototype.submitCCForm = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.showOverlay();
 
@@ -91,7 +89,7 @@
   };
 
   RiversideioPlugin.prototype.showLoginForm = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.removeClass(self.login_form, "riversideio-hidden");
 
@@ -100,7 +98,7 @@
   };
 
   RiversideioPlugin.prototype.showSignupForm = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.removeClass(self.signup_form, "riversideio-hidden");
 
@@ -109,7 +107,7 @@
   };
 
   RiversideioPlugin.prototype.showCCForm = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.removeClass(self.cc_form, "riversideio-hidden");
 
@@ -118,13 +116,13 @@
   };
 
   RiversideioPlugin.prototype.showOverlay = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.removeClass(self.overlay, "riversideio-hidden");
   };
 
   RiversideioPlugin.prototype.hideOverlay = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.addClass(self.overlay, "riversideio-hidden");
   };

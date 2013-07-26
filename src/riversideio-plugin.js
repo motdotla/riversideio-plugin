@@ -1,4 +1,6 @@
 (function(exports){
+  "use strict";
+
   var RiversideioPlugin = function() {
     if(!(this instanceof RiversideioPlugin)){
       return new RiversideioPlugin();
@@ -17,8 +19,14 @@
     if (this.script) {
       this.script.className += " riversideio-script";
 
-      this.draw();
-      this.events();
+      if (this.isShittyIE()) {
+        var msg = "Your browser version is not supported. Open this webpage on your mobile phone, install Google Chrome, or update your Internet Explorer to version 10.";
+        console.error(msg);
+        alert(msg);
+      } else {
+        this.draw();
+        this.events();
+      }
     } else {
       console.error("Could not find script tag to initialize on.");
     }

@@ -1,5 +1,7 @@
 /*! riversideio-plugin.js - 0.0.1 - 2013-07-26 - scottmotte */
 (function(exports){
+  "use strict";
+
   var RiversideioPlugin = function() {
     if(!(this instanceof RiversideioPlugin)){
       return new RiversideioPlugin();
@@ -18,8 +20,14 @@
     if (this.script) {
       this.script.className += " riversideio-script";
 
-      this.draw();
-      this.events();
+      if (this.isShittyIE()) {
+        var msg = "Your browser version is not supported. Open this webpage on your mobile phone, install Google Chrome, or update your Internet Explorer to version 10.";
+        console.error(msg);
+        alert(msg);
+      } else {
+        this.draw();
+        this.events();
+      }
     } else {
       console.error("Could not find script tag to initialize on.");
     }
@@ -31,6 +39,8 @@
 
 
 (function(RiversideioPlugin){
+  "use strict";
+
   RiversideioPlugin.prototype.draw = function() {
     this._drawWrapper();
     this._drawOverlay();
@@ -74,12 +84,7 @@
 
     this.signup_form.email_field                  = document.createElement('input');
     this.signup_form.email_field.className        = "riversideio-email-field";
-    // Internet Explorer 8 won't take email type field in JavaScript
-    if (this.isIE()) {
-      this.signup_form.email_field.type           = "text";
-    } else {
-      this.signup_form.email_field.type           = "email";
-    }
+    this.signup_form.email_field.type           = "email";
     this.signup_form.email_field.placeholder      = "Email";
     this.signup_form.email_field.setAttribute("required", "");
     fieldset.appendChild(this.signup_form.email_field);
@@ -99,9 +104,7 @@
 
     this.signup_form.signup_btn                   = document.createElement('button');
     this.signup_form.signup_btn.className         = "riversideio-signup-btn riversideio-btn pure-button notice";
-    if (!this.isIE()) {
-      this.signup_form.signup_btn.type            = "submit";
-    }
+    this.signup_form.signup_btn.type            = "submit";
     this.signup_form.signup_btn.innerHTML         = "Join";
     this.signup_form.appendChild(this.signup_form.signup_btn);
 
@@ -127,12 +130,7 @@
 
     this.login_form.email_field                 = document.createElement('input');
     this.login_form.email_field.className       = "riversideio-login-email-field";
-    // Internet Explorer 8 won't take email type field in JavaScript
-    if (this.isIE()) {
-      this.login_form.email_field.type          = "text";
-    } else {
-      this.login_form.email_field.type          = "email";
-    }
+    this.login_form.email_field.type            = "email";
     this.login_form.email_field.placeholder     = "Email";
     this.login_form.email_field.setAttribute("required", "");
     fieldset.appendChild(this.login_form.email_field);
@@ -152,9 +150,7 @@
 
     this.login_form.login_btn                   = document.createElement('button');
     this.login_form.login_btn.className         = "riversideio-login-btn riversideio-btn pure-button notice";
-    if (!this.isIE()) {
-      this.login_form.login_btn.type            = "submit";
-    }
+    this.login_form.login_btn.type              = "submit";
     this.login_form.login_btn.innerHTML         = "Login";
     this.login_form.appendChild(this.login_form.login_btn);
 
@@ -180,9 +176,7 @@
 
     this.cc_form.card_number_field                      = document.createElement('input');
     this.cc_form.card_number_field.className            = "riversideio-card-number-field";
-    if (!this.isIE()) {
-      this.cc_form.card_number_field.type               = "number";
-    }
+    this.cc_form.card_number_field.type                 = "number";
     this.cc_form.card_number_field.placeholder          = "Card Number";
     this.cc_form.card_number_field.setAttribute("required", "");
     fieldset.appendChild(this.cc_form.card_number_field);
@@ -193,9 +187,7 @@
 
     this.cc_form.card_exp_month_field                   = document.createElement('input');
     this.cc_form.card_exp_month_field.className         = "riversideio-card-exp-month-field";
-    if (!this.isIE()) {
-      this.cc_form.card_exp_month_field.type            = "number";
-    }
+    this.cc_form.card_exp_month_field.type              = "number";
     this.cc_form.card_exp_month_field.placeholder       = "MM";
     this.cc_form.card_exp_month_field.className         = "riversideio-exp-date-input";
     this.cc_form.card_exp_month_field.setAttribute("required", "");
@@ -203,9 +195,7 @@
 
     this.cc_form.card_exp_year_field                    = document.createElement('input');
     this.cc_form.card_exp_year_field.className          = "riversideio-card-exp-year-field";
-    if (!this.isIE()) {
-      this.cc_form.card_exp_year_field.type             = "number";
-    }
+    this.cc_form.card_exp_year_field.type               = "number";
     this.cc_form.card_exp_year_field.placeholder        = "YY";
     this.cc_form.card_exp_year_field.className          = "riversideio-exp-date-input";
     this.cc_form.card_exp_year_field.setAttribute("required", "");
@@ -217,9 +207,7 @@
 
     this.cc_form.card_cvc_field                         = document.createElement('input');
     this.cc_form.card_cvc_field.className               = "riversideio-card-cvc-field";
-    if (!this.isIE()) {
-      this.cc_form.card_cvc_field.type                  = "number";
-    }
+    this.cc_form.card_cvc_field.type                    = "number";
     this.cc_form.card_cvc_field.placeholder             = "CVC";
     this.cc_form.card_cvc_field.setAttribute("required", "");
     fieldset.appendChild(this.cc_form.card_cvc_field);
@@ -228,9 +216,7 @@
 
     this.cc_form.cc_btn                                 = document.createElement('button');
     this.cc_form.cc_btn.className                       = "riversideio-cc-btn riversideio-btn pure-button";
-    if (!this.isIE()) {
-      this.cc_form.cc_btn.type                          = "submit";
-    }
+    this.cc_form.cc_btn.type                            = "submit";
     this.cc_form.cc_btn.innerHTML                       = "Submit";
     this.cc_form.appendChild(this.cc_form.cc_btn);
 
@@ -261,6 +247,8 @@
 
 
 (function(RiversideioPlugin){
+  "use strict";
+
   var self;
   var CLICK             = "click";
   var TOUCH_SUPPORTED   = (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) ? true : false;
@@ -271,19 +259,15 @@
   RiversideioPlugin.prototype.events = function() {
     self = this;
 
-    //this.signup_form.addEventListener("submit", this.submitSignupForm, false);
-    //this.login_form.addEventListener("submit", this.submitLoginForm, false);
-    //this.cc_form.addEventListener("submit", this.submitCCForm, false);
-    if (!this.signup_form.addEventListener) {
-      this.signup_form.login_link.attachEvent("onclick", this.showLoginForm);
-    } else {
-      this.signup_form.login_link.addEventListener(CLICK, this.showLoginForm, false);
-    } 
-    //this.login_form.join_link.addEventListener(CLICK, this.showSignupForm, false);
+    self.signup_form.addEventListener("submit", self.submitSignupForm, false);
+    self.login_form.addEventListener("submit", self.submitLoginForm, false);
+    self.cc_form.addEventListener("submit", self.submitCCForm, false);
+    self.signup_form.login_link.addEventListener(CLICK, self.showLoginForm, false);
+    self.login_form.join_link.addEventListener(CLICK, self.showSignupForm, false);
   };
 
   RiversideioPlugin.prototype.submitSignupForm = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.showOverlay();
 
@@ -306,7 +290,7 @@
   };
 
   RiversideioPlugin.prototype.submitLoginForm = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.showOverlay();
 
@@ -329,7 +313,7 @@
   };
 
   RiversideioPlugin.prototype.submitCCForm = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.showOverlay();
 
@@ -353,7 +337,7 @@
   };
 
   RiversideioPlugin.prototype.showLoginForm = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.removeClass(self.login_form, "riversideio-hidden");
 
@@ -362,7 +346,7 @@
   };
 
   RiversideioPlugin.prototype.showSignupForm = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.removeClass(self.signup_form, "riversideio-hidden");
 
@@ -371,7 +355,7 @@
   };
 
   RiversideioPlugin.prototype.showCCForm = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.removeClass(self.cc_form, "riversideio-hidden");
 
@@ -380,13 +364,13 @@
   };
 
   RiversideioPlugin.prototype.showOverlay = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.removeClass(self.overlay, "riversideio-hidden");
   };
 
   RiversideioPlugin.prototype.hideOverlay = function(e) {
-    if (e) { e.preventDefault(); }
+    self.smartPreventDefault(e);
 
     self.addClass(self.overlay, "riversideio-hidden");
   };
@@ -395,9 +379,35 @@
 
 
 (function(RiversideioPlugin){  
-  RiversideioPlugin.prototype.isIE = function() {
-    var isMSIE = /*@cc_on!@*/0;
-    return isMSIE;
+  "use strict";
+
+  RiversideioPlugin.prototype.smartPreventDefault = function(e) {
+    if (e && e.preventDefault) {
+      e.preventDefault();
+    } else {
+      if (e) { e.returnValue = false; }
+    }
+  };
+
+  RiversideioPlugin.prototype.isShittyIE = function() {
+    return this.ie() < 10;
+  };
+
+  RiversideioPlugin.prototype.ie = function() {
+    var undef;
+    var v     = 3;
+    var div   = document.createElement('div');
+    var all   = div.getElementsByTagName('i');
+   
+    do {
+        div.innerHTML = '<!--[if gt IE ' + (++v) + ']><i></i><![endif]-->';
+    } while (all[0]);
+ 
+    if (v > 4) {
+      return v;
+    } else {
+      return undef;
+    }
   };
 
   RiversideioPlugin.prototype.Uuid = function() {
