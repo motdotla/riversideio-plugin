@@ -42,7 +42,12 @@
 
     this.signup_form.email_field                  = document.createElement('input');
     this.signup_form.email_field.className        = "riversideio-email-field";
-    this.signup_form.email_field.type             = "email";
+    // Internet Explorer 8 won't take email type field in JavaScript
+    if (this.isIE()) {
+      this.signup_form.email_field.type           = "text";
+    } else {
+      this.signup_form.email_field.type           = "email";
+    }
     this.signup_form.email_field.placeholder      = "Email";
     this.signup_form.email_field.setAttribute("required", "");
     fieldset.appendChild(this.signup_form.email_field);

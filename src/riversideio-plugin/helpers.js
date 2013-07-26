@@ -1,4 +1,9 @@
 (function(RiversideioPlugin){  
+  RiversideioPlugin.prototype.isIE = function() {
+    var isMSIE = /*@cc_on!@*/0;
+    return isMSIE;
+  };
+
   RiversideioPlugin.prototype.Uuid = function() {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
       var r, v;

@@ -1,4 +1,4 @@
-/*! riversideio-plugin.js - 0.0.1 - 2013-06-05 - scottmotte */
+/*! riversideio-plugin.js - 0.0.1 - 2013-07-26 - scottmotte */
 (function(exports){
   var RiversideioPlugin = function() {
     if(!(this instanceof RiversideioPlugin)){
@@ -73,7 +73,12 @@
 
     this.signup_form.email_field                  = document.createElement('input');
     this.signup_form.email_field.className        = "riversideio-email-field";
-    this.signup_form.email_field.type             = "email";
+    // Internet Explorer 8 won't take email type field in JavaScript
+    if (this.isIE()) {
+      this.signup_form.email_field.type           = "text";
+    } else {
+      this.signup_form.email_field.type           = "email";
+    }
     this.signup_form.email_field.placeholder      = "Email";
     this.signup_form.email_field.setAttribute("required", "");
     fieldset.appendChild(this.signup_form.email_field);
@@ -234,6 +239,7 @@
 
 }(RiversideioPlugin));
 
+
 (function(RiversideioPlugin){
   var self;
   var CLICK             = "click";
@@ -364,6 +370,11 @@
 }(RiversideioPlugin));
 
 (function(RiversideioPlugin){  
+  RiversideioPlugin.prototype.isIE = function() {
+    var isMSIE = /*@cc_on!@*/0;
+    return isMSIE;
+  };
+
   RiversideioPlugin.prototype.Uuid = function() {
     return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function(c) {
       var r, v;
@@ -460,5 +471,6 @@
   };
 
 }(RiversideioPlugin));
+
 
 var riversideio_plugin = RiversideioPlugin();
