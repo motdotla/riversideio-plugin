@@ -10,6 +10,15 @@ Save the build/riversideio-plugin.min.js to your website. And then add the follo
 <script src='/path/to/riversideio-plugin.js'></script>
 ```
 
+## Browser Support
+
+* Firefox
+* Chrome
+* Safari
+* IE 10 and greater
+
+Note: I spent an afternoon getting the JavaScript to work with IE8 and IE9. There are so many conditionals that will clutter up the code - different AJAX approach, different event handler bindings (attachEvent), and other small quirks. For the sake of keeping this a workable repo we are dropping support for IE9 and below.
+
 ## Contributing to this repository
 
 Install node (comes with npm) at [nodejs.org](http://nodejs.org/). 
