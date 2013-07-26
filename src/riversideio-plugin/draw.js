@@ -67,7 +67,9 @@
 
     this.signup_form.signup_btn                   = document.createElement('button');
     this.signup_form.signup_btn.className         = "riversideio-signup-btn riversideio-btn pure-button notice";
-    this.signup_form.signup_btn.type              = "submit";
+    if (!this.isIE()) {
+      this.signup_form.signup_btn.type            = "submit";
+    }
     this.signup_form.signup_btn.innerHTML         = "Join";
     this.signup_form.appendChild(this.signup_form.signup_btn);
 
@@ -93,7 +95,12 @@
 
     this.login_form.email_field                 = document.createElement('input');
     this.login_form.email_field.className       = "riversideio-login-email-field";
-    this.login_form.email_field.type            = "email";
+    // Internet Explorer 8 won't take email type field in JavaScript
+    if (this.isIE()) {
+      this.login_form.email_field.type          = "text";
+    } else {
+      this.login_form.email_field.type          = "email";
+    }
     this.login_form.email_field.placeholder     = "Email";
     this.login_form.email_field.setAttribute("required", "");
     fieldset.appendChild(this.login_form.email_field);
@@ -113,7 +120,9 @@
 
     this.login_form.login_btn                   = document.createElement('button');
     this.login_form.login_btn.className         = "riversideio-login-btn riversideio-btn pure-button notice";
-    this.login_form.login_btn.type              = "submit";
+    if (!this.isIE()) {
+      this.login_form.login_btn.type            = "submit";
+    }
     this.login_form.login_btn.innerHTML         = "Login";
     this.login_form.appendChild(this.login_form.login_btn);
 
@@ -139,7 +148,9 @@
 
     this.cc_form.card_number_field                      = document.createElement('input');
     this.cc_form.card_number_field.className            = "riversideio-card-number-field";
-    this.cc_form.card_number_field.type                 = "number";
+    if (!this.isIE()) {
+      this.cc_form.card_number_field.type               = "number";
+    }
     this.cc_form.card_number_field.placeholder          = "Card Number";
     this.cc_form.card_number_field.setAttribute("required", "");
     fieldset.appendChild(this.cc_form.card_number_field);
@@ -150,7 +161,9 @@
 
     this.cc_form.card_exp_month_field                   = document.createElement('input');
     this.cc_form.card_exp_month_field.className         = "riversideio-card-exp-month-field";
-    this.cc_form.card_exp_month_field.type              = "number";
+    if (!this.isIE()) {
+      this.cc_form.card_exp_month_field.type            = "number";
+    }
     this.cc_form.card_exp_month_field.placeholder       = "MM";
     this.cc_form.card_exp_month_field.className         = "riversideio-exp-date-input";
     this.cc_form.card_exp_month_field.setAttribute("required", "");
@@ -158,7 +171,9 @@
 
     this.cc_form.card_exp_year_field                    = document.createElement('input');
     this.cc_form.card_exp_year_field.className          = "riversideio-card-exp-year-field";
-    this.cc_form.card_exp_year_field.type               = "number";
+    if (!this.isIE()) {
+      this.cc_form.card_exp_year_field.type             = "number";
+    }
     this.cc_form.card_exp_year_field.placeholder        = "YY";
     this.cc_form.card_exp_year_field.className          = "riversideio-exp-date-input";
     this.cc_form.card_exp_year_field.setAttribute("required", "");
@@ -170,7 +185,9 @@
 
     this.cc_form.card_cvc_field                         = document.createElement('input');
     this.cc_form.card_cvc_field.className               = "riversideio-card-cvc-field";
-    this.cc_form.card_cvc_field.type                    = "number";
+    if (!this.isIE()) {
+      this.cc_form.card_cvc_field.type                  = "number";
+    }
     this.cc_form.card_cvc_field.placeholder             = "CVC";
     this.cc_form.card_cvc_field.setAttribute("required", "");
     fieldset.appendChild(this.cc_form.card_cvc_field);
@@ -179,7 +196,9 @@
 
     this.cc_form.cc_btn                                 = document.createElement('button');
     this.cc_form.cc_btn.className                       = "riversideio-cc-btn riversideio-btn pure-button";
-    this.cc_form.cc_btn.type                            = "submit";
+    if (!this.isIE()) {
+      this.cc_form.cc_btn.type                          = "submit";
+    }
     this.cc_form.cc_btn.innerHTML                       = "Submit";
     this.cc_form.appendChild(this.cc_form.cc_btn);
 

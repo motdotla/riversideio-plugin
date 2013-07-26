@@ -9,11 +9,15 @@
   RiversideioPlugin.prototype.events = function() {
     self = this;
 
-    this.signup_form.addEventListener("submit", this.submitSignupForm, false);
-    this.login_form.addEventListener("submit", this.submitLoginForm, false);
-    this.cc_form.addEventListener("submit", this.submitCCForm, false);
-    this.signup_form.login_link.addEventListener(CLICK, this.showLoginForm, false);
-    this.login_form.join_link.addEventListener(CLICK, this.showSignupForm, false);
+    //this.signup_form.addEventListener("submit", this.submitSignupForm, false);
+    //this.login_form.addEventListener("submit", this.submitLoginForm, false);
+    //this.cc_form.addEventListener("submit", this.submitCCForm, false);
+    if (!this.signup_form.addEventListener) {
+      this.signup_form.login_link.attachEvent("onclick", this.showLoginForm);
+    } else {
+      this.signup_form.login_link.addEventListener(CLICK, this.showLoginForm, false);
+    } 
+    //this.login_form.join_link.addEventListener(CLICK, this.showSignupForm, false);
   };
 
   RiversideioPlugin.prototype.submitSignupForm = function(e) {
