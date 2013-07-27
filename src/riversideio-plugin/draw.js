@@ -64,7 +64,7 @@
 
     this.signup_form.signup_btn                   = document.createElement('button');
     this.signup_form.signup_btn.className         = "riversideio-signup-btn riversideio-btn pure-button notice";
-    this.signup_form.signup_btn.type            = "submit";
+    this.signup_form.signup_btn.setAttribute("type", "submit");
     this.signup_form.signup_btn.innerHTML         = "Join";
     this.signup_form.appendChild(this.signup_form.signup_btn);
 
@@ -110,7 +110,7 @@
 
     this.login_form.login_btn                   = document.createElement('button');
     this.login_form.login_btn.className         = "riversideio-login-btn riversideio-btn pure-button notice";
-    this.login_form.login_btn.type              = "submit";
+    this.login_form.login_btn.setAttribute("type", "submit");
     this.login_form.login_btn.innerHTML         = "Login";
     this.login_form.appendChild(this.login_form.login_btn);
 
@@ -176,7 +176,7 @@
 
     this.cc_form.cc_btn                                 = document.createElement('button');
     this.cc_form.cc_btn.className                       = "riversideio-cc-btn riversideio-btn pure-button";
-    this.cc_form.cc_btn.type                            = "submit";
+    this.cc_form.cc_btn.setAttribute("type", "submit");
     this.cc_form.cc_btn.innerHTML                       = "Submit";
     this.cc_form.appendChild(this.cc_form.cc_btn);
 
