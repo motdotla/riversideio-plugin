@@ -115,6 +115,16 @@
     self.addClass(self.login_form, "riversideio-hidden");
   };
 
+  RiversideioPlugin.prototype.showInfoForm = function(e) {
+    self.smartPreventDefault(e);
+
+    self.removeClass(self.info_form, "riversideio-hidden");
+
+    self.addClass(self.signup_form, "riversideio-hidden");
+    self.addClass(self.cc_form, "riversideio-hidden");
+    self.addClass(self.login_form, "riversideio-hidden");
+  };
+
   RiversideioPlugin.prototype.showOverlay = function(e) {
     self.smartPreventDefault(e);
 
