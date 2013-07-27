@@ -22,25 +22,17 @@ module.exports = (grunt) ->
         dest: "build/riversideio-plugin.js"
     jshint:
       all: ['src/riversideio-plugin.js', 'src/riversideio-plugin/*.js']
-    connect:
-      server:
-        options:
-          hostname: "*"
-          port: 3000,
-          base: './public'
-          keepalive: true
     simplemocha:
       all: 
         src: 'test/*.js'
 
   grunt.loadNpmTasks "grunt-contrib-concat"
   grunt.loadNpmTasks "grunt-contrib-uglify"
-  grunt.loadNpmTasks "grunt-contrib-connect"
   grunt.loadNpmTasks "grunt-simple-mocha"
   grunt.loadNpmTasks "grunt-contrib-jshint"
 
   grunt.registerTask "test", ["simplemocha", "jshint"]
-  grunt.registerTask "default", ["jshint", "uglify", "concat", "connect"]
+  grunt.registerTask "default", ["jshint", "uglify", "concat"]
 
   # Some available commands
   # grunt

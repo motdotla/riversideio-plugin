@@ -6,8 +6,25 @@
     this._drawOverlay();
     this._drawSignupForm();
     this._drawLoginForm();
+    this._drawInfoForm();
     this._drawCCForm();
     this._drawCss();
+  };
+
+  RiversideioPlugin.prototype.createInput = function( options ){
+
+    var input           = document.createElement('input');
+
+    input.className     = options.className || "";
+    input.type          = options.type || "text";
+    input.placeholder   = options.placeholder || "";
+
+    if( options.required ){
+        input.setAttribute("required", "");
+    }
+
+    return input;
+
   };
 
   RiversideioPlugin.prototype._drawWrapper = function() {
@@ -181,6 +198,73 @@
     this.cc_form.appendChild(this.cc_form.cc_btn);
 
     return this.wrapper.appendChild(this.cc_form);
+  };
+
+  RiversideioPlugin.prototype._drawInfoForm = function() {
+    var form                            = this.info_form = document.createElement('form');
+    form.className                      = "riversideio-info-form riversideio-form pure-form pure-form-stacked riversideio-hidden";
+    form.method                         = "POST";
+    form.action                         = "#";
+
+    var fieldset                        = document.createElement('fieldset');
+
+    var label1                          = document.createElement('label');
+    label1.innerHTML                    = "Address";
+    fieldset.appendChild(label1);
+
+    form.address_1 = this.createInput({
+        className : "riversideio-address-1",
+        placeholder : "Street Address",
+        required : true
+    });
+
+    fieldset.appendChild(form.address_1);
+
+    form.address_2 = this.createInput({
+        className : "riversideio-address-2",
+        placeholder : "Street Address (optional)",
+    });
+
+    fieldset.appendChild(form.address_2);
+
+    form.city = this.createInput({
+        className : "riversideio-city",
+        placeholder : "City",
+        required : true
+    });
+        
+    fieldset.appendChild(form.city);
+
+    form.zip = this.createInput({
+        className : "riversideio-zip",
+        placeholder : "Zip",
+        required : true
+    });
+        
+    fieldset.appendChild(form.zip);
+
+    var label2                                  = document.createElement('label');
+    label2.innerHTML                            = "Phone";
+    fieldset.appendChild(label2);
+
+    form.phone = this.createInput({
+        className : "riversideio-phone",
+        placeholder : "Phone",
+        type : "phone",
+        required : true
+    });
+
+    fieldset.appendChild(form.phone);
+
+    form.appendChild(fieldset);
+
+    form.info_btn                                 = document.createElement('button');
+    form.info_btn.className                       = "riversideio-cc-btn riversideio-btn pure-button";
+    form.info_btn.setAttribute("type", "submit");
+    form.info_btn.innerHTML                       = "Submit";
+    form.appendChild(form.info_btn);
+
+    return this.wrapper.appendChild(form);
   };
 
   RiversideioPlugin.prototype._drawCss = function() {

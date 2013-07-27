@@ -14,6 +14,7 @@
     self.signup_form.addEventListener("submit", self.submitSignupForm, false);
     self.login_form.addEventListener("submit", self.submitLoginForm, false);
     self.cc_form.addEventListener("submit", self.submitCCForm, false);
+    self.info_form.addEventListener("submit", self.submitInfoForm, false);
     self.signup_form.login_link.addEventListener(CLICK, self.showLoginForm, false);
     self.login_form.join_link.addEventListener(CLICK, self.showSignupForm, false);
   };
@@ -54,14 +55,48 @@
     self.Post(self.endpoint+'/sessions.json', payload, function(resp){
       self.hideOverlay();
 
-      if (!!resp.success) {
+      if ( resp.success ) {
         self.user_id        = resp.user.id;
         self.session_token  = resp.user.session_token;
-        self.showCCForm();
+        if( resp.user.zip ){
+          // show css fields
+          self.showCCForm();
+        }else{
+          // show information fields
+          self.showInfoForm();
+        }
       } else {
         alert(resp.error.message);
       }
     });
+  };
+
+  RiversideioPlugin.prototype.submitInfoForm = function(e){
+    self.smartPreventDefault(e);
+
+    self.showOverlay();
+    var form = self.info_form;
+
+    var payload = {
+      session_token : self.session_token,
+      address_1 : form.address_1.value,
+      address_2 : form.address_2.value || "",
+      city : form.city.value,
+      zip : form.zip.value,
+      phone : form.phone.value
+    };
+
+    self.Post( self.endpoint + "/users/" +  self.user_id + "/update.json", payload, function( resp ){
+      self.hideOverlay();
+
+      if( resp.success ){
+        self.showCCForm();
+      }else{
+        alert(resp.error.message);
+      }
+
+    });
+
   };
 
   RiversideioPlugin.prototype.submitCCForm = function(e) {
@@ -111,7 +146,18 @@
 
     self.removeClass(self.cc_form, "riversideio-hidden");
 
+    self.addClass(self.info_form, "riversideio-hidden");
     self.addClass(self.signup_form, "riversideio-hidden");
+    self.addClass(self.login_form, "riversideio-hidden");
+  };
+
+  RiversideioPlugin.prototype.showInfoForm = function(e) {
+    self.smartPreventDefault(e);
+
+    self.removeClass(self.info_form, "riversideio-hidden");
+
+    self.addClass(self.signup_form, "riversideio-hidden");
+    self.addClass(self.cc_form, "riversideio-hidden");
     self.addClass(self.login_form, "riversideio-hidden");
   };
 
