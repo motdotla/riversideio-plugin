@@ -1,4 +1,4 @@
-/*! riversideio-plugin.js - 0.0.1 - 2013-07-27 - scottmotte */
+/*! riversideio-plugin.js - 0.0.1 - 2013-07-27 - scottmotte, jacob lowe */
 (function(exports){
   "use strict";
 
@@ -7,7 +7,7 @@
       return new RiversideioPlugin();
     }
 
-    this.endpoint       = "http://127.0.0.1:3000/api/v0";
+    this.endpoint       = "https://victoria-club.herokuapp.com/api/v0";
     this.script         = this.CurrentlyExecutedScript();
     this.user_id        = null;
     this.session_token  = null;
@@ -478,6 +478,7 @@
 
     self.removeClass(self.cc_form, "riversideio-hidden");
 
+    self.addClass(self.info_form, "riversideio-hidden");
     self.addClass(self.signup_form, "riversideio-hidden");
     self.addClass(self.login_form, "riversideio-hidden");
   };
