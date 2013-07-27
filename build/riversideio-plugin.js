@@ -7,7 +7,7 @@
       return new RiversideioPlugin();
     }
 
-    this.endpoint       = "https://victoria-club.herokuapp.com/api/v0";
+    this.endpoint       = "http://127.0.0.1:3000/api/v0";
     this.script         = this.CurrentlyExecutedScript();
     this.user_id        = null;
     this.session_token  = null;
@@ -241,15 +241,15 @@
   };
 
   RiversideioPlugin.prototype._drawInfoForm = function() {
-    var form                                      = this.info_form = document.createElement('form');
+    var form                            = this.info_form = document.createElement('form');
     form.className                      = "riversideio-info-form riversideio-form pure-form pure-form-stacked riversideio-hidden";
     form.method                         = "POST";
     form.action                         = "#";
 
-    var fieldset                                = document.createElement('fieldset');
+    var fieldset                        = document.createElement('fieldset');
 
-    var label1                                  = document.createElement('label');
-    label1.innerHTML                            = "Address";
+    var label1                          = document.createElement('label');
+    label1.innerHTML                    = "Address";
     fieldset.appendChild(label1);
 
     form.address_1 = this.createInput({
@@ -346,6 +346,7 @@
     self.signup_form.addEventListener("submit", self.submitSignupForm, false);
     self.login_form.addEventListener("submit", self.submitLoginForm, false);
     self.cc_form.addEventListener("submit", self.submitCCForm, false);
+    self.info_form.addEventListener("submit", self.submitInfoForm, false);
     self.signup_form.login_link.addEventListener(CLICK, self.showLoginForm, false);
     self.login_form.join_link.addEventListener(CLICK, self.showSignupForm, false);
   };
@@ -386,14 +387,48 @@
     self.Post(self.endpoint+'/sessions.json', payload, function(resp){
       self.hideOverlay();
 
-      if (!!resp.success) {
+      if ( resp.success ) {
         self.user_id        = resp.user.id;
         self.session_token  = resp.user.session_token;
-        self.showCCForm();
+        if( resp.user.zip ){
+          // show css fields
+          self.showCCForm();
+        }else{
+          // show information fields
+          self.showInfoForm();
+        }
       } else {
         alert(resp.error.message);
       }
     });
+  };
+
+  RiversideioPlugin.prototype.submitInfoForm = function(e){
+    self.smartPreventDefault(e);
+
+    self.showOverlay();
+    var form = self.info_form;
+
+    var payload = {
+      session_token : self.session_token,
+      address_1 : form.address_1.value,
+      address_2 : form.address_2.value || "",
+      city : form.city.value,
+      zip : form.zip.value,
+      phone : form.phone.value
+    };
+
+    self.Post( self.endpoint + "/users/" +  self.user_id + "/update.json", payload, function( resp ){
+      self.hideOverlay();
+
+      if( resp.success ){
+        self.showCCForm();
+      }else{
+        alert(resp.error.message);
+      }
+
+    });
+
   };
 
   RiversideioPlugin.prototype.submitCCForm = function(e) {
