@@ -32,7 +32,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-jshint"
 
   grunt.registerTask "test", ["simplemocha", "jshint"]
-  grunt.registerTask "default", ["jshint", "uglify", "concat", "connect"]
+  grunt.registerTask "default", ["jshint", "uglify", "concat"]
 
   # Some available commands
   # grunt
