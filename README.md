@@ -1,3 +1,5 @@
+# DEPRECATED: Kept for posterity reasons. See <http://github.com/riversideio> for up to date technology.
+
 # riversideio-plugin
 
 This plugin lets you add a membership join/login form. It also comes with the ability to create and update your credit card. You can embed it on any webpage anywhere.
